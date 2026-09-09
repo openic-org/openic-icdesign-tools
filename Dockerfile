@@ -1,110 +1,119 @@
 # Based on https://github.com/iic-jku/IIC-OSIC-TOOLS/blob/main/_build/Dockerfile
 
+# Default required for `docker build --check`; manifest.json overrides at build time.
 ARG BASE_IMAGE=ubuntu:22.04
 
-# Jan 11, 2025 (ngspice-44.2)
-ARG NGSPICE_REPO_URL="https://github.com/danchitnis/ngspice-sf-mirror"
-ARG NGSPICE_REPO_COMMIT="ngspice-44.2"
-ARG NGSPICE_NAME="ngspice"
+# ngspice
+ARG NGSPICE_REPO_URL
+ARG NGSPICE_REPO_COMMIT
+ARG NGSPICE_NAME
 
-ARG XYCE_REPO_URL="https://github.com/Xyce/Xyce.git"
-ARG XYCE_REPO_COMMIT="Release-7.8.0"
-ARG XYCE_TRILINOS_REPO_URL="https://github.com/trilinos/Trilinos"
-ARG XYCE_TRILINOS_REPO_COMMIT="trilinos-release-12-12-1"
-ARG XYCE_NAME="xyce"
+# Xyce
+ARG XYCE_REPO_URL
+ARG XYCE_REPO_COMMIT
+ARG XYCE_TRILINOS_REPO_URL
+ARG XYCE_TRILINOS_REPO_COMMIT
+ARG XYCE_NAME
 
-# Aug 16, 2024 (master)
-ARG OPEN_PDKS_REPO_URL="https://github.com/RTimothyEdwards/open_pdks"
-ARG OPEN_PDKS_REPO_COMMIT="0fe599b2afb6708d281543108caf8310912f54af"
-ARG OPEN_PDKS_NAME="open_pdks"
+# Open PDKs
+ARG OPEN_PDKS_REPO_URL
+ARG OPEN_PDKS_REPO_COMMIT
+ARG OPEN_PDKS_NAME
 
-# Mar 2, 2026 (8.3.613)
-ARG MAGIC_REPO_URL="https://github.com/RTimothyEdwards/magic.git"
-ARG MAGIC_REPO_COMMIT="8.3.613"
-ARG MAGIC_NAME="magic"
+# Magic
+ARG MAGIC_REPO_URL
+ARG MAGIC_REPO_COMMIT
+ARG MAGIC_NAME
 
-# Mar 11, 2026 (v0.3.0)
-ARG IHP_PDK_REPO_URL="https://github.com/IHP-GmbH/IHP-Open-PDK.git"
-ARG IHP_PDK_REPO_COMMIT="5cccb161f7492697cfa52eb14dc03beb00bdca9e"
-ARG IHP_PDK_REPO_BRANCH="v0.3.0"
-ARG IHP_PDK_NAME="ihp-sg13g2"
+# IHP Open PDK
+ARG IHP_PDK_REPO_URL
+ARG IHP_PDK_REPO_COMMIT
+ARG IHP_PDK_REPO_BRANCH
+ARG IHP_PDK_NAME
 
-# Oct 30, 2023 (master)
-ARG OPENVAF_REPO_URL="https://github.com/iic-jku/OpenVAF.git"
-ARG OPENVAF_REPO_COMMIT="a9697ae7780518f021f9f64e819b3a57033bd39f"
-ARG OPENVAF_DOWNLOAD="https://openva.fra1.cdn.digitaloceanspaces.com/openvaf_23_5_0_linux_amd64.tar.gz"
-ARG OPENVAF_NAME="openvaf"
+# OpenVAF
+ARG OPENVAF_REPO_URL
+ARG OPENVAF_REPO_COMMIT
+ARG OPENVAF_DOWNLOAD
+ARG OPENVAF_NAME
 
-# Nov 12, 2025 (v0.30.5)
-ARG KLAYOUT_REPO_URL="https://github.com/KLayout/klayout"
-ARG KLAYOUT_REPO_COMMIT="v0.30.5"
-ARG KLAYOUT_DOWNLOAD="https://www.klayout.org/downloads/Ubuntu-22/klayout_0.30.5-1_amd64.deb"
-ARG KLAYOUT_NAME="klayout"
+# KLayout
+ARG KLAYOUT_REPO_URL
+ARG KLAYOUT_REPO_COMMIT
+ARG KLAYOUT_DOWNLOAD
+ARG KLAYOUT_NAME
 
-# Mar 14, 2025 (master)
-ARG XSCHEM_REPO_URL="https://github.com/StefanSchippers/xschem.git"
-ARG XSCHEM_REPO_COMMIT="313acc8e2974c38be80549203a555bed0fd4e30f"
-ARG XSCHEM_NAME="xschem"
+# xschem
+ARG XSCHEM_REPO_URL
+ARG XSCHEM_REPO_COMMIT
+ARG XSCHEM_NAME
 
-# Mar 10, 2025 (1.5.293)
-ARG NETGEN_REPO_URL="https://github.com/rtimothyedwards/netgen"
-ARG NETGEN_REPO_COMMIT="1.5.293"
-ARG NETGEN_NAME="netgen"
+# Netgen
+ARG NETGEN_REPO_URL
+ARG NETGEN_REPO_COMMIT
+ARG NETGEN_NAME
 
-# Oct 25, 2023 (main)
-ARG GAW3_XSCHEM_REPO_URL="https://github.com/StefanSchippers/xschem-gaw.git"
-ARG GAW3_XSCHEM_REPO_COMMIT="640c672e1ad768b92eb6a15943459a1d2214e1dc"
-ARG GAW3_XSCHEM_NAME="gaw3-xschem"
+# gaw3 for xschem
+ARG GAW3_XSCHEM_REPO_URL
+ARG GAW3_XSCHEM_REPO_COMMIT
+ARG GAW3_XSCHEM_NAME
 
-# Aug 6, 2024 (yosys-0.44)
-ARG YOSYS_REPO_URL="https://github.com/YosysHQ/yosys"
-ARG YOSYS_REPO_COMMIT="yosys-0.44"
-ARG YOSYS_NAME="yosys"
-ARG YOSYS_EQY_REPO_URL="https://github.com/YosysHQ/eqy.git"
-ARG YOSYS_EQY_NAME="yosys_eqy"
-ARG YOSYS_SBY_REPO_URL="https://github.com/YosysHQ/sby.git"
-ARG YOSYS_SBY_NAME="yosys_sby"
-ARG YOSYS_MCY_REPO_URL="https://github.com/YosysHQ/mcy.git"
-ARG YOSYS_MCY_NAME="yosys_mcy"
+# Yosys
+ARG YOSYS_REPO_URL
+ARG YOSYS_REPO_COMMIT
+ARG YOSYS_NAME
+ARG YOSYS_EQY_REPO_URL
+ARG YOSYS_EQY_NAME
+ARG YOSYS_SBY_REPO_URL
+ARG YOSYS_SBY_NAME
+ARG YOSYS_MCY_REPO_URL
+ARG YOSYS_MCY_NAME
 
-# May 8, 2023 (v1.1.5)
-ARG CVC_RV_REPO_URL="https://github.com/d-m-bailey/cvc"
-ARG CVC_RV_REPO_COMMIT="v1.1.5"
-ARG CVC_RV_NAME="cvc_rv"
+# CVC-RV
+ARG CVC_RV_REPO_URL
+ARG CVC_RV_REPO_COMMIT
+ARG CVC_RV_NAME
 
-# Jun 15, 2024 (v5.026)
-ARG VERILATOR_REPO_URL="https://github.com/verilator/verilator"
-ARG VERILATOR_REPO_COMMIT="cd693ce02b914151fcc761eaecd15af96d2006ad"
-ARG VERILATOR_NAME="verilator"
+# Verilator
+ARG VERILATOR_REPO_URL
+ARG VERILATOR_REPO_COMMIT
+ARG VERILATOR_NAME
 
-# Sep 7, 2024 (master)
-ARG IVERILOG_REPO_URL="https://github.com/steveicarus/iverilog.git"
-ARG IVERILOG_REPO_COMMIT="25a84d5cfcecf67bfb7734929a1df98c4b137ce6"
-ARG IVERILOG_NAME="iverilog"
+# Icarus Verilog
+ARG IVERILOG_REPO_URL
+ARG IVERILOG_REPO_COMMIT
+ARG IVERILOG_NAME
 
-# Sep 7, 2024 (master)
-ARG GTKWAVE_REPO_URL="https://github.com/gtkwave/gtkwave.git"
-ARG GTKWAVE_REPO_COMMIT="0a800de96255f7fb11beadb6729fdf670da76ecb"
-ARG GTKWAVE_NAME="gtkwave"
+# GTKWave
+ARG GTKWAVE_REPO_URL
+ARG GTKWAVE_REPO_COMMIT
+ARG GTKWAVE_NAME
 
-# Oct 25, 2025 - OpenROAD
-ARG OPENROAD_REPO_URL="https://github.com/The-OpenROAD-Project/OpenROAD.git"
-ARG OPENROAD_REPO_COMMIT="ee9759486a31328ff8a8213131c3cd5f5fc7f39a"
-ARG OPENROAD_NAME="openroad"
+# OpenROAD
+ARG OPENROAD_REPO_URL
+ARG OPENROAD_REPO_COMMIT
+ARG OPENROAD_NAME
 
-# Oct 25, 2025 (master) - OpenROAD-flow-scripts repository
-ARG ORFS_REPO_URL="https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts"
-ARG ORFS_REPO_COMMIT="40674dd5cf48db6dc9028d6ab5a98f107208f5bb"
-ARG ORFS_NAME="OpenROAD-flow-scripts"
+# OpenROAD-flow-scripts
+ARG ORFS_REPO_URL
+ARG ORFS_REPO_COMMIT
+ARG ORFS_NAME
+
+ARG NIX_INSTALLER_URL
+ARG NIX_SUBSTITUTER_URL
+ARG NIX_SUBSTITUTER_PUBLIC_KEY
+ARG LIBRELANE_REPO_URL
+ARG LIBRELANE_REPO_COMMIT
+ARG ENABLE_GUI
+ARG MAX_BUILD_JOBS
 
 #######################################################################
 # Basic configuration for base and builder
 #######################################################################
 
 FROM ${BASE_IMAGE} AS common
-ARG CONTAINER_TAG=unknown
 # Limit build parallelism to reduce RAM usage (default: 2 for memory-constrained builds)
-ARG MAX_BUILD_JOBS=2
+ARG MAX_BUILD_JOBS
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Europe/Vienna \
     LC_ALL=en_US.UTF-8 \
@@ -448,6 +457,7 @@ RUN --mount=type=bind,source=images/final_structure/configure,target=/images/fin
 
 COPY --from=open_pdks  ${PDK_ROOT}                  ${PDK_ROOT}
 COPY --from=ihp_pdk    ${PDK_ROOT}/${IHP_PDK_NAME}  ${PDK_ROOT}/${IHP_PDK_NAME}
+COPY --from=ihp_pdk    ${PDK_ROOT}/versions.txt     ${PDK_ROOT}/versions.txt
 
 # Copy common libraries from builder, excluding compile-time only tools
 COPY --from=builder    ${TOOLS}/common              ${TOOLS}/common
@@ -523,6 +533,11 @@ ENV NGSPICE_REPO_COMMIT=${NGSPICE_REPO_COMMIT} \
 # Add Nix package manager and LibreLane
 #######################################################################
 FROM unic-cass-tools AS unic-cass-tools-nix
+ARG NIX_INSTALLER_URL \
+    NIX_SUBSTITUTER_URL \
+    NIX_SUBSTITUTER_PUBLIC_KEY \
+    LIBRELANE_REPO_URL \
+    LIBRELANE_REPO_COMMIT
 USER root
 
 # Install sudo for Nix installer
@@ -532,12 +547,12 @@ RUN apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
 USER designer
 
 # Install Nix in single-user mode for designer user
-RUN curl -L https://nixos.org/nix/install | sh -s -- --no-daemon --yes
+RUN curl -L "$NIX_INSTALLER_URL" | sh -s -- --no-daemon --yes
 
 # Configure Nix with custom substituters and enable flakes
 RUN mkdir -p ~/.config/nix && \
-    echo 'extra-substituters = https://nix-cache.fossi-foundation.org' > ~/.config/nix/nix.conf && \
-    echo 'extra-trusted-public-keys = nix-cache.fossi-foundation.org:3+K59iFwXqKsL7BNu6Guy0v+uTlwsxYQxjspXzqLYQs=' >> ~/.config/nix/nix.conf && \
+    echo "extra-substituters = $NIX_SUBSTITUTER_URL" > ~/.config/nix/nix.conf && \
+    echo "extra-trusted-public-keys = $NIX_SUBSTITUTER_PUBLIC_KEY" >> ~/.config/nix/nix.conf && \
     echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
 
 # Add USER variable to .profile (required by nix.sh)
@@ -545,7 +560,8 @@ RUN sed -i '/if \[ -e \/home\/designer\/.nix-profile/i export USER=designer' ~/.
 
 # Clone LibreLane repository
 USER root
-RUN git clone https://github.com/librelane/librelane.git /opt/librelane && \
+RUN git clone "$LIBRELANE_REPO_URL" /opt/librelane && \
+    git -C /opt/librelane checkout --detach "$LIBRELANE_REPO_COMMIT" && \
     chown -R designer:designer /opt/librelane
 
 # Create /opt/pdks/ciel with proper permissions for LibreLane
@@ -555,9 +571,8 @@ USER designer
 ENV HOME=/home/designer USER=designer
 SHELL ["/bin/bash", "-c"]
 
-# Install LibreLane from dev branch using Nix
+# Install the manifest-pinned LibreLane revision using Nix
 RUN cd /opt/librelane && \
-    git checkout dev && \
     source ~/.nix-profile/etc/profile.d/nix.sh && \
     nix profile install . --extra-experimental-features "nix-command flakes"
 
